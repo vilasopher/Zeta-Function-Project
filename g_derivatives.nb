@@ -1,0 +1,283 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      9783,        275]
+NotebookOptionsPosition[      9284,        253]
+NotebookOutlinePosition[      9623,        268]
+CellTagsIndexPosition[      9580,        265]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"<<", "Combinatorica`"}], ";"}]], "Input",
+ CellChangeTimes->{{3.703110127554421*^9, 3.703110160218218*^9}, {
+  3.703110238387226*^9, 3.703110245367921*^9}, {3.7031103041888247`*^9, 
+  3.703110316613744*^9}}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","compat",
+   "\"Combinatorica Graph and Permutations functionality has been superseded \
+by preloaded functionality. The package now being loaded may conflict with \
+this. Please see the Compatibility Guide for details.\"",2,47,2,
+   24154001877407976455,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.705669435280212*^9, 3.7056702283762407`*^9, 
+  3.705680675754436*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Function", " ", "that", " ", "generates", " ", "coefficients", " ", "of", 
+    " ", "the", " ", 
+    RowBox[{"Exp", "[", "z", "]"}], " ", "polynomial", " ", "in", " ", "the", 
+    " ", "derivatives", " ", "of", " ", "g", "\[IndentingNewLine]", "\t", 
+    "The", " ", "first", " ", "argument", " ", "is", " ", "the", " ", 
+    "derivative", " ", "number", "\[IndentingNewLine]", "\t", "The", " ", 
+    "second", " ", "argument", " ", "is", " ", "the", " ", "order", " ", "of",
+     " ", "the", " ", "coefficient"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ClearAll", "[", "gdezc", "]"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"gdezc", "[", 
+     RowBox[{"0", ",", "0"}], "]"}], ":=", 
+    RowBox[{"-", "1"}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"gdezc", "[", 
+     RowBox[{"d_", ",", "0"}], "]"}], ":=", "0"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"gdezc", "[", 
+     RowBox[{"d_", ",", "o_"}], "]"}], ":=", 
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"-", "1"}], ")"}], 
+      RowBox[{"d", "+", "1"}]], 
+     RowBox[{"Eulerian", "[", 
+      RowBox[{"d", ",", 
+       RowBox[{"o", "-", "1"}]}], "]"}]}]}]}]}]], "Input",
+ CellChangeTimes->{{3.703110250694599*^9, 3.703110252457711*^9}, {
+  3.703110331598383*^9, 3.7031105050019693`*^9}, {3.703110595753858*^9, 
+  3.703110606034924*^9}, {3.7050138252319317`*^9, 3.705013826366599*^9}, {
+  3.7050155538456097`*^9, 3.7050155627698383`*^9}, {3.705680680581935*^9, 
+  3.705680681323927*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Function", " ", "that", " ", "generates", " ", "the", " ", "coefficients",
+     " ", "of", " ", "the", " ", "polynomials", " ", "in", " ", "K", " ", 
+    "associated", " ", "with", " ", "the", "\[IndentingNewLine]", "\t", 
+    "specified", " ", 
+    RowBox[{"e", "^", 
+     RowBox[{"(", 
+      RowBox[{"i", "+", "K"}], ")"}]}], "z", " ", 
+    RowBox[{"term", ".", " ", "It"}], " ", "really", " ", "generates", " ", 
+    "the", " ", "polynomial", " ", "Q", " ", "in", " ", "K", " ", "and", " ", 
+    
+    RowBox[{"e", "^", "z"}], " ", "and", " ", "then", "\[IndentingNewLine]", 
+    "\t", "the", " ", "result", " ", "can", " ", "be", " ", "split", " ", 
+    "up", " ", "using", " ", "CoefficientList"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ClearAll", "[", "q", "]"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"q", "[", 
+     RowBox[{"0", ",", "k_", ",", "x_"}], "]"}], ":=", "1"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"q", "[", 
+     RowBox[{"j_", ",", "k_", ",", "x_"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"q", "[", 
+      RowBox[{"j", ",", "k", ",", "x"}], "]"}], "=", 
+     RowBox[{"Expand", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"x", "-", "1"}], ")"}], 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"k", " ", 
+           RowBox[{"q", "[", 
+            RowBox[{
+             RowBox[{"j", "-", "1"}], ",", "k", ",", "x"}], "]"}]}], "+", 
+          RowBox[{"x", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"D", "[", 
+              RowBox[{
+               RowBox[{"q", "[", 
+                RowBox[{
+                 RowBox[{"j", "-", "1"}], ",", "k", ",", "a"}], "]"}], ",", 
+               "a"}], "]"}], "/.", 
+             RowBox[{"a", "\[Rule]", "x"}]}], ")"}]}]}], ")"}]}], "-", 
+       RowBox[{"x", " ", "j", " ", 
+        RowBox[{"q", "[", 
+         RowBox[{
+          RowBox[{"j", "-", "1"}], ",", "k", ",", "x"}], "]"}]}]}], 
+      "]"}]}]}]}]}]], "Input",
+ CellChangeTimes->{{3.705013828068068*^9, 3.705014018557477*^9}, {
+  3.705015564599596*^9, 3.705015568854747*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Generate", " ", "the", " ", "given", " ", "number", " ", "of", " ", 
+    "derivatives", " ", "and", " ", "store", " ", "them"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"numDerivatives", " ", "=", " ", "110"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"file", " ", "=", " ", 
+     RowBox[{"OpenWrite", "[", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
+       "\"\<g_derivatives.h\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"WriteLine", "[", 
+     RowBox[{"file", ",", 
+      RowBox[{
+      "\"\</* g_derivatives.h */\\n/* Author: Vilas Winstein */\\n\\n#define \
+NUM_G_DERIVATIVES \>\"", "<>", 
+       RowBox[{"ToString", "[", "numDerivatives", "]"}], "<>", 
+       "\"\<\\n#define SIZE_OF_G_LIST \>\"", "<>", 
+       RowBox[{"ToString", "[", 
+        RowBox[{"numDerivatives", "+", "1"}], "]"}], "<>", "\"\<\\n\>\""}]}], 
+     "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"WriteLine", "[", 
+     RowBox[{
+     "file", ",", 
+      "\"\<char *gFunctionEZCoeffs[SIZE_OF_G_LIST][SIZE_OF_G_LIST] = \>\""}], 
+     "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"WriteLine", "[", 
+     RowBox[{"file", ",", 
+      RowBox[{
+       RowBox[{"ToString", "[", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Map", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"\"\<\\\"\>\"", "<>", 
+               RowBox[{"ToString", "[", "#", "]"}], "<>", "\"\<\\\"\>\""}], 
+              "&"}], ",", "#"}], "]"}], "&"}], ",", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"gdezc", "[", 
+               RowBox[{"d", ",", "o"}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"o", ",", "0", ",", "d"}], "}"}]}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"d", ",", "0", ",", "numDerivatives"}], "}"}]}], "]"}]}],
+          "]"}], "]"}], "<>", "\"\<;\>\""}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"WriteLine", "[", 
+     RowBox[{
+     "file", ",", 
+      "\"\<\\nchar \
+*gFunctionEKZPolys[SIZE_OF_G_LIST][SIZE_OF_G_LIST][SIZE_OF_G_LIST] = \>\""}], 
+     "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"WriteLine", "[", 
+     RowBox[{"file", ",", 
+      RowBox[{
+       RowBox[{"ToString", "[", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Map", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Map", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"\"\<\\\"\>\"", "<>", 
+                  RowBox[{"ToString", "[", "#", "]"}], "<>", "\"\<\\\"\>\""}],
+                  "&"}], ",", "#"}], "]"}], "&"}], ",", "#"}], "]"}], "&"}], 
+          ",", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"CoefficientList", "[", 
+             RowBox[{
+              RowBox[{"CoefficientList", "[", 
+               RowBox[{
+                RowBox[{"q", "[", 
+                 RowBox[{"d", ",", "k", ",", "x"}], "]"}], ",", "x"}], "]"}], 
+              ",", "k"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"d", ",", "0", ",", "numDerivatives"}], "}"}]}], "]"}]}],
+          "]"}], "]"}], "<>", "\"\<;\>\""}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Close", "[", "file", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.705014326462632*^9, 3.705014523692301*^9}, {
+  3.705014554973084*^9, 3.7050148792121687`*^9}, {3.70501502477817*^9, 
+  3.7050150298376226`*^9}, {3.705015092227137*^9, 3.705015093647359*^9}, {
+  3.705015587778441*^9, 3.705015592587716*^9}, {3.705669440130817*^9, 
+  3.705669440286889*^9}, {3.705670225064459*^9, 3.705670225575325*^9}, {
+  3.70568068839415*^9, 3.70568068867211*^9}}],
+
+Cell[BoxData["\<\"/home/vilas/workspaces/Zeta/Zeta/g_derivatives.h\"\>"], \
+"Output",
+ CellChangeTimes->{3.705014891079402*^9, 3.705015036620201*^9, 
+  3.705015102304538*^9, 3.705015612973431*^9, 3.7056695748211327`*^9, 
+  3.705670248436105*^9, 3.705680706824418*^9}]
+}, Open  ]]
+},
+WindowSize->{1916, 1058},
+WindowMargins->{{2, Automatic}, {2, Automatic}},
+FrontEndVersion->"11.0 for Linux x86 (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 242, 5, 34, "Input"],
+Cell[825, 29, 437, 9, 23, "Message"]
+}, Open  ]],
+Cell[1277, 41, 1577, 36, 169, "Input"],
+Cell[2857, 79, 2176, 57, 145, "Input"],
+Cell[CellGroupData[{
+Cell[5058, 140, 3940, 104, 216, "Input"],
+Cell[9001, 246, 267, 4, 89, "Output"]
+}, Open  ]]
+}
+]
+*)
+

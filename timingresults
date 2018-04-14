@@ -1,0 +1,27 @@
+n:	power of 10 in imaginary part, so s = 0.5 + (10^n)i
+time:	time (in seconds) to evaluate Z(s)
+in all cases, precision = 200 bits
+
+n	time
+0	0.621
+1	0.664
+2	0.671
+3	0.779
+4	1.665
+5	11.229
+6	101.897
+7	1037.554
+
+d:	number of requested digits
+time:	time (in seconds) to evaluate Z(s)
+in all cases, s = 0.5 + (10^4)i
+
+d	time
+8	0.263
+16	0.276
+32	0.417
+64	0.528
+128	0.850
+256	3.126
+512	30.412
+1024	453.434

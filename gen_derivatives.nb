@@ -1,0 +1,429 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     14986,        421]
+NotebookOptionsPosition[     14522,        401]
+NotebookOutlinePosition[     14853,        416]
+CellTagsIndexPosition[     14810,        413]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{
+  "File", " ", "containing", " ", "generating", " ", "information", " ", 
+   "for", " ", "both", " ", "f", " ", "and", " ", "g", " ", 
+   RowBox[{"derivatives", ".", " ", "Also"}], " ", "generates", " ", "the", 
+   " ", "separate", " ", "header", " ", "file", " ", "containing", " ", "the",
+    " ", "total", " ", "number", " ", "of", " ", "derivatives", " ", "which", 
+   " ", "is", " ", "needed", " ", "for", " ", "the", " ", 
+   "\"\<generate_num_derivatives\>\"", " ", 
+   RowBox[{"function", "."}]}], "*)"}]], "Input",
+ CellChangeTimes->{{3.7080132009401503`*^9, 3.708013217229907*^9}, {
+  3.708013296342972*^9, 3.708013355560768*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"<<", "Combinatorica`"}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Set", " ", "the", " ", "number", " ", "of", " ", "derivatives"}], 
+   " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"numDerivatives", "=", "110"}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Function", " ", "that", " ", "generates", " ", "the", " ", "Associated", 
+    " ", "Stirling", " ", "Numbers", " ", "of", " ", "the", " ", "first", " ",
+     "kind", " ", 
+    RowBox[{"(", 
+     RowBox[{"see", " ", "MathWorld"}], ")"}]}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "d2", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d2", "[", 
+    RowBox[{"n_", ",", "1"}], "]"}], ":=", 
+   RowBox[{"Factorial", "[", 
+    RowBox[{"n", "-", "1"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"d2", "[", 
+     RowBox[{"n_", ",", "k_"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"d2", "[", 
+      RowBox[{"n", ",", "k"}], "]"}], "=", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"n", "\[LessEqual]", 
+        RowBox[{
+         RowBox[{"2", "k"}], "-", "1"}]}], ",", "0", ",", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"n", "-", "1"}], ")"}], 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"d2", "[", 
+           RowBox[{
+            RowBox[{"n", "-", "1"}], ",", "k"}], "]"}], "+", 
+          RowBox[{"d2", "[", 
+           RowBox[{
+            RowBox[{"n", "-", "2"}], ",", 
+            RowBox[{"k", "-", "1"}]}], "]"}]}], ")"}]}]}], "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Function", " ", "that", " ", "generates", " ", "the", " ", "f", " ", 
+    "derivative", " ", "coefficient", " ", "matrix", "\[IndentingNewLine]", 
+    "\t", "The", " ", "first", " ", "argument", " ", "is", " ", "the", " ", 
+    "derivative", " ", "number", "\[IndentingNewLine]", "\t", "The", " ", 
+    "second", " ", "argument", " ", "is", " ", "the", " ", "order", " ", "of",
+     " ", "the", " ", "coefficient"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAll", "[", "fdc", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fdc", "[", 
+   RowBox[{"0", ",", "0"}], "]"}], ":=", "1"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fdc", "[", 
+   RowBox[{"d_", ",", "0"}], "]"}], ":=", "0"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fdc", "[", 
+    RowBox[{"d_", ",", "o_"}], "]"}], ":=", 
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{"-", "1"}], ")"}], "d"], 
+    RowBox[{"d2", "[", 
+     RowBox[{"d", ",", "o"}], "]"}]}]}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Function", " ", "that", " ", "generates", " ", "coefficients", " ", "of", 
+    " ", "the", " ", 
+    RowBox[{"Exp", "[", "z", "]"}], " ", "polynomial", " ", "in", " ", "the", 
+    " ", "derivatives", " ", "of", " ", "g", "\[IndentingNewLine]", "\t", 
+    "The", " ", "first", " ", "argument", " ", "is", " ", "the", " ", 
+    "derivative", " ", "number", "\[IndentingNewLine]", "\t", "The", " ", 
+    "second", " ", "argument", " ", "is", " ", "the", " ", "order", " ", "of",
+     " ", "the", " ", "coefficient"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ClearAll", "[", "gdezc", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gdezc", "[", 
+   RowBox[{"0", ",", "0"}], "]"}], ":=", 
+  RowBox[{"-", "1"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gdezc", "[", 
+   RowBox[{"d_", ",", "0"}], "]"}], ":=", "0"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"gdezc", "[", 
+    RowBox[{"d_", ",", "o_"}], "]"}], ":=", 
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{"-", "1"}], ")"}], 
+     RowBox[{"d", "+", "1"}]], 
+    RowBox[{"Eulerian", "[", 
+     RowBox[{"d", ",", 
+      RowBox[{"o", "-", "1"}]}], "]"}]}]}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Function", " ", "that", " ", "generates", " ", "the", " ", "coefficients",
+     " ", "of", " ", "the", " ", "polynomials", " ", "in", " ", "K", " ", 
+    "associated", " ", "with", " ", "the", "\[IndentingNewLine]", "\t", 
+    "specified", " ", 
+    RowBox[{"e", "^", 
+     RowBox[{"(", 
+      RowBox[{"i", "+", "K"}], ")"}]}], "z", " ", 
+    RowBox[{"term", ".", " ", "It"}], " ", "really", " ", "generates", " ", 
+    "the", " ", "polynomial", " ", "Q", " ", "in", " ", "K", " ", "and", " ", 
+    
+    RowBox[{"e", "^", "z"}], " ", "and", " ", "then", "\[IndentingNewLine]", 
+    "\t", "the", " ", "result", " ", "can", " ", "be", " ", "split", " ", 
+    "up", " ", "using", " ", "CoefficientList"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ClearAll", "[", "q", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"q", "[", 
+   RowBox[{"0", ",", "k_", ",", "x_"}], "]"}], ":=", 
+  "1"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"q", "[", 
+    RowBox[{"j_", ",", "k_", ",", "x_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"q", "[", 
+     RowBox[{"j", ",", "k", ",", "x"}], "]"}], "=", 
+    RowBox[{"Expand", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"x", "-", "1"}], ")"}], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"k", " ", 
+          RowBox[{"q", "[", 
+           RowBox[{
+            RowBox[{"j", "-", "1"}], ",", "k", ",", "x"}], "]"}]}], "+", 
+         RowBox[{"x", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"D", "[", 
+             RowBox[{
+              RowBox[{"q", "[", 
+               RowBox[{
+                RowBox[{"j", "-", "1"}], ",", "k", ",", "a"}], "]"}], ",", 
+              "a"}], "]"}], "/.", 
+            RowBox[{"a", "\[Rule]", "x"}]}], ")"}]}]}], ")"}]}], "-", 
+      RowBox[{"x", " ", "j", " ", 
+       RowBox[{"q", "[", 
+        RowBox[{
+         RowBox[{"j", "-", "1"}], ",", "k", ",", "x"}], "]"}]}]}], "]"}]}]}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Write", " ", "num", " ", "derivatives", " ", "header", " ", "file"}], " ",
+    "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"file", "=", 
+   RowBox[{"OpenWrite", "[", 
+    RowBox[{
+     RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
+     "\"\<num_derivatives.h\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"WriteLine", "[", 
+   RowBox[{"file", ",", 
+    RowBox[{
+    "\"\</* num_derivatives.h */\\n/* Author: Vilas Winstein */\\n\\n#define \
+NUM_DERIVATIVES \>\"", "<>", 
+     RowBox[{"ToString", "[", "numDerivatives", "]"}], "<>", 
+     "\"\<\\n#define SIZE_OF_LIST \>\"", "<>", 
+     RowBox[{"ToString", "[", 
+      RowBox[{"numDerivatives", "+", "1"}], "]"}], "<>", "\"\<\\n\>\""}]}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Close", "[", "file", "]"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Write", " ", "f", " ", "derivatives", " ", "header", " ", "file"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"file", "=", 
+   RowBox[{"OpenWrite", "[", 
+    RowBox[{
+     RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
+     "\"\<f_derivatives.h\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"WriteLine", "[", 
+   RowBox[{"file", ",", 
+    RowBox[{
+    "\"\</* f_derivatives.h */\\n/* Author: Vilas Winstein */\\n\\n#define \
+NUM_F_DERIVATIVES \>\"", "<>", 
+     RowBox[{"ToString", "[", "numDerivatives", "]"}], "<>", 
+     "\"\<\\n#define SIZE_OF_F_LIST \>\"", "<>", 
+     RowBox[{"ToString", "[", 
+      RowBox[{"numDerivatives", "+", "1"}], "]"}], "<>", "\"\<\\n\>\""}]}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"WriteLine", "[", 
+   RowBox[{
+   "file", ",", 
+    "\"\<char *derivativeCoefficientMatrix[SIZE_OF_F_LIST][SIZE_OF_F_LIST / 2 \
++ 1] = \>\""}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"WriteLine", "[", 
+   RowBox[{"file", ",", 
+    RowBox[{
+     RowBox[{"ToString", "[", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"\"\<\\\"\>\"", "<>", 
+             RowBox[{"ToString", "[", "#", "]"}], "<>", "\"\<\\\"\>\""}], 
+            "&"}], ",", "#"}], "]"}], "&"}], ",", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"fdc", "[", 
+             RowBox[{"d", ",", "o"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"o", ",", "0", ",", 
+              RowBox[{"Floor", "[", 
+               RowBox[{"d", "/", "2"}], "]"}]}], "}"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"d", ",", "0", ",", "numDerivatives"}], "}"}]}], "]"}]}], 
+       "]"}], "]"}], "<>", "\"\<;\>\""}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Close", "[", "file", "]"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Write", " ", "g", " ", "derivatives", " ", "header", " ", "file"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"file", " ", "=", " ", 
+   RowBox[{"OpenWrite", "[", 
+    RowBox[{
+     RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
+     "\"\<g_derivatives.h\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"WriteLine", "[", 
+   RowBox[{"file", ",", 
+    RowBox[{
+    "\"\</* g_derivatives.h */\\n/* Author: Vilas Winstein */\\n\\n#define \
+NUM_G_DERIVATIVES \>\"", "<>", 
+     RowBox[{"ToString", "[", "numDerivatives", "]"}], "<>", 
+     "\"\<\\n#define SIZE_OF_G_LIST \>\"", "<>", 
+     RowBox[{"ToString", "[", 
+      RowBox[{"numDerivatives", "+", "1"}], "]"}], "<>", "\"\<\\n\>\""}]}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"WriteLine", "[", 
+   RowBox[{
+   "file", ",", 
+    "\"\<char *gFunctionEZCoeffs[SIZE_OF_G_LIST][SIZE_OF_G_LIST] = \>\""}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"WriteLine", "[", 
+   RowBox[{"file", ",", 
+    RowBox[{
+     RowBox[{"ToString", "[", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"\"\<\\\"\>\"", "<>", 
+             RowBox[{"ToString", "[", "#", "]"}], "<>", "\"\<\\\"\>\""}], 
+            "&"}], ",", "#"}], "]"}], "&"}], ",", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"gdezc", "[", 
+             RowBox[{"d", ",", "o"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"o", ",", "0", ",", "d"}], "}"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"d", ",", "0", ",", "numDerivatives"}], "}"}]}], "]"}]}], 
+       "]"}], "]"}], "<>", "\"\<;\>\""}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"WriteLine", "[", 
+   RowBox[{
+   "file", ",", 
+    "\"\<\\nchar \
+*gFunctionEKZPolys[SIZE_OF_G_LIST][SIZE_OF_G_LIST][SIZE_OF_G_LIST] = \>\""}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"WriteLine", "[", 
+   RowBox[{"file", ",", 
+    RowBox[{
+     RowBox[{"ToString", "[", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Map", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"\"\<\\\"\>\"", "<>", 
+                RowBox[{"ToString", "[", "#", "]"}], "<>", "\"\<\\\"\>\""}], 
+               "&"}], ",", "#"}], "]"}], "&"}], ",", "#"}], "]"}], "&"}], ",", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"CoefficientList", "[", 
+           RowBox[{
+            RowBox[{"CoefficientList", "[", 
+             RowBox[{
+              RowBox[{"q", "[", 
+               RowBox[{"d", ",", "k", ",", "x"}], "]"}], ",", "x"}], "]"}], 
+            ",", "k"}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"d", ",", "0", ",", "numDerivatives"}], "}"}]}], "]"}]}], 
+       "]"}], "]"}], "<>", "\"\<;\>\""}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Close", "[", "file", "]"}]}], "Input",
+ CellChangeTimes->{{3.708013388510906*^9, 3.708013667756301*^9}, {
+  3.70801375191677*^9, 3.708013753963173*^9}}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","compat",
+   "\"Combinatorica Graph and Permutations functionality has been superseded \
+by preloaded functionality. The package now being loaded may conflict with \
+this. Please see the Compatibility Guide for details.\"",2,110,2,
+   24162437016641683698,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.708013713950955*^9, 3.708013754970188*^9}],
+
+Cell[BoxData["\<\"/home/vilas/workspaces/Zeta/Zeta/num_derivatives.h\"\>"], \
+"Output",
+ CellChangeTimes->{3.708013714122617*^9, 3.7080137553748207`*^9}],
+
+Cell[BoxData["\<\"/home/vilas/workspaces/Zeta/Zeta/f_derivatives.h\"\>"], \
+"Output",
+ CellChangeTimes->{3.708013714122617*^9, 3.708013755474451*^9}],
+
+Cell[BoxData["\<\"/home/vilas/workspaces/Zeta/Zeta/g_derivatives.h\"\>"], \
+"Output",
+ CellChangeTimes->{3.708013714122617*^9, 3.708013772021596*^9}]
+}, Open  ]]
+},
+WindowSize->{956, 1058},
+WindowMargins->{{2, Automatic}, {2, 20}},
+FrontEndVersion->"11.0 for Linux x86 (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 686, 12, 78, "Input"],
+Cell[CellGroupData[{
+Cell[1269, 36, 12363, 340, 1435, "Input"],
+Cell[13635, 378, 411, 8, 41, "Message"],
+Cell[14049, 388, 153, 2, 32, "Output"],
+Cell[14205, 392, 149, 2, 32, "Output"],
+Cell[14357, 396, 149, 2, 89, "Output"]
+}, Open  ]]
+}
+]
+*)
+
